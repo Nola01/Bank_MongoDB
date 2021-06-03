@@ -2,6 +2,7 @@ package modelo;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import java.io.FileReader;
@@ -16,19 +17,33 @@ public class Conexion {
     private Connection connection;
     private static Conexion conexion;
 
+    /*public static void pruebaConexion () {
+        MongoClient mongo = new MongoClient("localhost", 27017);
+        *//*MongoCredential mongoCredential = MongoCredential.createCredential(
+                "localhost", "MOngoDB", "s3cret".toCharArray());*//*
+        MongoDatabase mongoDatabase = mongo.getDatabase("db1");
+        MongoCollection mongoCollection = mongoDatabase.getCollection("accounts");
+        //connection = DriverManager.getConnection("mongodb://localhost:27017/local?authSource=admin");
+        System.out.println(mongoCollection);
+    }*/
+
     private Conexion() throws SQLException, IOException {
         MongoClient mongo = new MongoClient("localhost", 27017);
-        MongoCredential mongoCredential = MongoCredential.createCredential(
-                "localhost", "MOngoDB", "s3cret".toCharArray());
-        MongoDatabase mongoDatabase = mongo.getDatabase("MongoDB");
+        /*MongoCredential mongoCredential = MongoCredential.createCredential(
+                "localhost", "MOngoDB", "s3cret".toCharArray());*/
+        MongoDatabase mongoDatabase = mongo.getDatabase("db1");
+        MongoCollection mongoCollection = mongoDatabase.getCollection("accounts");
+        //connection = DriverManager.getConnection("mongodb://localhost:27017/local?authSource=admin");
+        System.out.println(mongoCollection);
+
+
     }
 
-    //getter de conexion
+
     public Connection getConnection() {
         return connection;
     }
 
-    //acceso a la base de datos
     public static Conexion getInstance() throws SQLException, IOException {
         if (conexion == null) {
             Runtime.getRuntime().addShutdownHook(new HookCierreConexion());
@@ -42,11 +57,11 @@ public class Conexion {
         @Override
         public void run() {
             try {
-                Conexion conexion5 = new Conexion();
-                Connection connection = conexion5.getConnection();
+                Conexion conexion1 = new Conexion();
+                Connection connection = conexion1.getConnection();
                 if (connection != null) {
                     connection.close();
-                    System.out.println("cerrada la conexión");
+                    System.out.println("Conexión cerrada");
                 }
 
             } catch (SQLException e) {
@@ -55,5 +70,20 @@ public class Conexion {
                 e.printStackTrace();
             }
         }
+    }
+
+    // probamos la conexion
+    public static void main(String[] args) throws SQLException, IOException {
+        //pruebaConexion();
+        Conexion conexion = new Conexion();
+        System.out.println(conexion);
+        /*try {
+            System.out.println("conexión: " + Conexion.getInstance().connection);
+            System.out.println("conexión: " + Conexion.getInstance().connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
     }
 }
