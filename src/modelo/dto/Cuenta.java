@@ -74,7 +74,7 @@ public class Cuenta implements Comparable<Cuenta> {
     @Override
     public String toString() {
         return String.format("%d ; %s ; %d ; %.2f ; %s ; %s", id, iban, creditCard,
-                balance, fullName, date);
+                 balance, fullName, date);
     }
 
     @Override

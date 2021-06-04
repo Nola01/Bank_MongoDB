@@ -44,8 +44,10 @@ public class CuentaDAOSQL implements CuentaDAO{
 
     @Override
     public List<Cuenta> obtenerListaCuentas() {
-        Conexion.getConexion();
         List<Cuenta> cuentas = new ArrayList<>();
+        String [] datos = conexion.toString().split("[^=*,]");
+
+
 
 
 

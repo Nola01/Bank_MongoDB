@@ -17,17 +17,8 @@ public class Conexion {
     //private Connection connection;
     private static Conexion conexion;
 
-    /*private Conexion() throws SQLException, IOException {
-        MongoClient mongoClient = new MongoClient("localhost", 27017);
-        *//*MongoCredential mongoCredential = MongoCredential.createCredential(
-                "localhost", "MOngoDB", "s3cret".toCharArray());*//*
-        MongoDatabase db = mongoClient.getDatabase("db1");
-        MongoCollection mongoCollection = db.getCollection("accounts");
-        //System.out.println(mongoCollection);
-
-    }*/
     //Patron Singleton
-    public static Conexion getConexion() {
+    private Conexion() throws SQLException, IOException {
         MongoClient mongoClient = new MongoClient("localhost", 27017);
         /*MongoCredential mongoCredential = MongoCredential.createCredential(
                 "localhost", "MOngoDB", "s3cret".toCharArray());*/
@@ -39,6 +30,10 @@ public class Conexion {
         while (it.hasNext()) {
             System.out.println(it.next());
         }
+
+    }
+
+    public static Conexion getConexion() {
         return conexion;
     }
 
@@ -55,9 +50,14 @@ public class Conexion {
     static class HookCierreConexion  extends Thread  {
         @Override
         public void run() {
-            //try {
-            Conexion conexion = new Conexion();
-            //Connection connection = conexion.getConexion();
+            Conexion conexion = null;
+            try {
+                conexion = new Conexion();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if (conexion != null) {
                 //connection.close();
                 System.out.println("Conexión cerrada");
@@ -73,9 +73,9 @@ public class Conexion {
     }
 
     // probamos la conexion
-    /*public static void main(String[] args) throws SQLException, IOException {
-        *//*Conexion conexion = new Conexion();
-        System.out.println(conexion);*//*
+    public static void main(String[] args) throws SQLException, IOException {
+        /*Conexion conexion = new Conexion();
+        System.out.println(conexion);*/
 
         try {
             System.out.println("Conexión: " + Conexion.getInstance().getConexion());
@@ -85,6 +85,6 @@ public class Conexion {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 }
 
