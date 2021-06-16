@@ -1,16 +1,18 @@
 package modelo.dto;
 
+import org.bson.types.ObjectId;
+
 import java.util.Objects;
 
 public class Cuenta implements Comparable<Cuenta> {
-    private int id;
+    private ObjectId id;
     private String iban;
-    private Long creditCard;
+    private String creditCard;
     private double balance;
     private String fullName;
     private String date;
 
-    public Cuenta(int id, String iban, Long creditCard, double balance, String fullName, String date) {
+    public Cuenta(ObjectId id, String iban, String creditCard, double balance, String fullName, String date) {
         this.id = id;
         this.iban = iban;
         this.creditCard = creditCard;
@@ -19,7 +21,7 @@ public class Cuenta implements Comparable<Cuenta> {
         this.date = date;
     }
 
-    public Cuenta(String iban, Long creditCard, double balance, String fullName, String date) {
+    public Cuenta(String iban, String creditCard, double balance, String fullName, String date) {
         this.iban = iban;
         this.creditCard = creditCard;
         this.balance = balance;
@@ -35,11 +37,11 @@ public class Cuenta implements Comparable<Cuenta> {
         this.iban = iban;
     }
 
-    public Long getCreditCard() {
+    public String getCreditCard() {
         return creditCard;
     }
 
-    public void setCreditCard(Long creditCard) {
+    public void setCreditCard(String creditCard) {
         this.creditCard = creditCard;
     }
 
@@ -67,13 +69,13 @@ public class Cuenta implements Comparable<Cuenta> {
         this.date = date;
     }
 
-    public int getId() {
+    public ObjectId getId() {
         return id;
     }
 
     @Override
     public String toString() {
-        return String.format("%d ; %s ; %d ; %.2f ; %s ; %s", id, iban, creditCard,
+        return String.format("%s ; %s ; %s ; %.2f ; %s ; %s", id, iban, creditCard,
                  balance, fullName, date);
     }
 

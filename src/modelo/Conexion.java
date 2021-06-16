@@ -1,5 +1,7 @@
 package modelo;
 
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -16,21 +18,37 @@ public class Conexion {
 
     //private Connection connection;
     private static Conexion conexion;
+    private static MongoClient mongoClient;
+    private static MongoDatabase mongoDatabase;
+    private static MongoCollection mongoCollection;
 
     //Patron Singleton
     private Conexion() throws SQLException, IOException {
-        MongoClient mongoClient = new MongoClient("localhost", 27017);
+        mongoClient = new MongoClient("localhost", 27017);
         /*MongoCredential mongoCredential = MongoCredential.createCredential(
                 "localhost", "MOngoDB", "s3cret".toCharArray());*/
-        MongoDatabase db = mongoClient.getDatabase("db1");
-        MongoCollection mongoCollection = db.getCollection("accounts");
+        mongoDatabase = mongoClient.getDatabase("db1");
+        mongoCollection = mongoDatabase.getCollection("accounts");
+        //System.out.println(mongoDatabase);
         //System.out.println(mongoCollection);
-        FindIterable<Document> iterDoc = mongoCollection.find();
+        /*FindIterable<Document> iterDoc = mongoCollection.find();
         Iterator it = iterDoc.iterator();
         while (it.hasNext()) {
             System.out.println(it.next());
-        }
+        }*/
 
+    }
+
+    public static MongoCollection getMongoCollection() {
+        return mongoCollection;
+    }
+
+    public static MongoClient getMongoClient() {
+        return mongoClient;
+    }
+
+    public static MongoDatabase getMongoDatabase() {
+        return mongoDatabase;
     }
 
     public static Conexion getConexion() {
@@ -63,12 +81,6 @@ public class Conexion {
                 System.out.println("Conexión cerrada");
             }
 
-            /*} catch (SQLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }*/
         }
     }
 
