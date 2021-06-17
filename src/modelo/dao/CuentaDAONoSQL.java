@@ -1,12 +1,6 @@
 package modelo.dao;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
 import com.mongodb.*;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
@@ -17,14 +11,10 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Consumer;
-import java.util.logging.Filter;
 
 public class CuentaDAONoSQL implements CuentaDAO{
     private MongoClient mongoClient = Conexion.getMongoClient();
@@ -45,11 +35,12 @@ public class CuentaDAONoSQL implements CuentaDAO{
 
     @Override
     public List<Cuenta> obtenerListaCuentas() {
+
         List<Cuenta> listaCuentas = new ArrayList<>();
 
         mongoCollection.find().forEach((Consumer<Document>) (Document document) ->
         {
-            String id = document.getString("_id");
+            ObjectId id = document.getObjectId("_id");
             String iban = document.getString("iban");
             String creditCard = document.getString("creditCard");
             Double balance = document.getDouble("balance");
