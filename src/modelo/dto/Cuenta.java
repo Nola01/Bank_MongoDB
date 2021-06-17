@@ -5,14 +5,14 @@ import org.bson.types.ObjectId;
 import java.util.Objects;
 
 public class Cuenta implements Comparable<Cuenta> {
-    private ObjectId id;
+    private String id;
     private String iban;
     private String creditCard;
     private double balance;
     private String fullName;
     private String date;
 
-    public Cuenta(ObjectId id, String iban, String creditCard, double balance, String fullName, String date) {
+    public Cuenta(String id, String iban, String creditCard, double balance, String fullName, String date) {
         this.id = id;
         this.iban = iban;
         this.creditCard = creditCard;
@@ -69,7 +69,7 @@ public class Cuenta implements Comparable<Cuenta> {
         this.date = date;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 

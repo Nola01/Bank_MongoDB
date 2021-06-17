@@ -49,7 +49,7 @@ public class CuentaDAONoSQL implements CuentaDAO{
 
         mongoCollection.find().forEach((Consumer<Document>) (Document document) ->
         {
-            ObjectId id = document.getObjectId("_id");
+            String id = document.getString("_id");
             String iban = document.getString("iban");
             String creditCard = document.getString("creditCard");
             Double balance = document.getDouble("balance");
@@ -64,22 +64,32 @@ public class CuentaDAONoSQL implements CuentaDAO{
     }
 
     @Override
-    public boolean borrarCuenta(ObjectId idCuenta) {
-        mongoCollection.deleteOne(Filters.eq(idCuenta));
-        return false;
+    public boolean borrarCuenta(String idCuenta) {
+        Document document = new Document();
+        mongoCollection.deleteOne(document.append("_id", new ObjectId(idCuenta)));
+        return mongoCollection.deleteOne(document).getDeletedCount() != 0;
     }
 
     @Override
     public boolean insertarCuenta(Cuenta cuentaSinID) {
-        mongoCollection.insertOne(new Document().append("iban", cuentaSinID.getIban()).
-                append("creditCard", cuentaSinID.getCreditCard()).append("balance", cuentaSinID.getBalance()).
-                append("fullName", cuentaSinID.getFullName()).append("date", cuentaSinID.getDate()));
-        return false;
+        long numInicial = mongoCollection.countDocuments();
+        Document document = new Document();
+        document.append("iban", cuentaSinID.getIban());
+        document.append("creditCard", cuentaSinID.getCreditCard());
+        document.append("balance", cuentaSinID.getBalance());
+        document.append("fullName", cuentaSinID.getFullName());
+        document.append("date", cuentaSinID.getDate());
+        mongoCollection.insertOne(document);
+        long numFinal = mongoCollection.countDocuments();
+        return (numFinal - numInicial) != 0;
     }
 
     @Override
-    public boolean actualizarCuentaPorID(Cuenta cuentaConID) {
-        mongoCollection.updateMany(Filters.eq("id", cuentaConID.getId()), Updates.set("iban", cuentaConID.getIban()),);
-        return false;
+    public void actualizarCuentaPorID(Cuenta cuentaConID) {
+        mongoCollection.updateOne(Filters.eq("_id", cuentaConID.getId()),Updates.combine(
+                Updates.set("iban",cuentaConID.getIban()),
+                Updates.set("creditCard",cuentaConID.getCreditCard()),
+                Updates.set("balance",cuentaConID.getBalance()),
+                Updates.set("fullName",cuentaConID.getFullName())));
     }
 }

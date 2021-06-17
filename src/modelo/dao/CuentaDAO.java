@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CuentaDAO {
     List<Cuenta> obtenerListaCuentas();
-    boolean borrarCuenta(ObjectId idCuenta);
+    boolean borrarCuenta(String idCuenta);
     boolean insertarCuenta(Cuenta cuentaSinID);
-    boolean actualizarCuentaPorID(Cuenta cuentaConID);
+    void actualizarCuentaPorID(Cuenta cuentaConID);
 }
