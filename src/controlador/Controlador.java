@@ -61,6 +61,9 @@ public class Controlador {
         //añadimos la cuenta a la lista
         modeloTabla.addRow(cuenta);
 
+        //para ocultar el panel derecho despues de añadir
+        ocultarPanelDerecho();
+
     }
 
     private void mostrarPanelDerecho() {
