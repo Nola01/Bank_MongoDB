@@ -66,7 +66,7 @@ public class CuentaVista {
 
     public CuentaVista() {
         //creamos la vista de la aplicacion
-        JFrame frame = new JFrame("Banco");
+        JFrame frame = new JFrame("Bank");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();

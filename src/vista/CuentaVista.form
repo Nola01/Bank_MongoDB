@@ -15,7 +15,7 @@
           <component id="43969" class="javax.swing.JLabel" binding="titleLabel">
             <constraints/>
             <properties>
-              <text value="Banco"/>
+              <text value="Bank"/>
             </properties>
           </component>
         </children>
@@ -28,12 +28,14 @@
           <component id="2a364" class="javax.swing.JButton" binding="deleteButton">
             <constraints/>
             <properties>
+              <foreground color="-4510674"/>
               <text value="DELETE"/>
             </properties>
           </component>
           <component id="e5535" class="javax.swing.JButton" binding="addButton">
             <constraints/>
             <properties>
+              <foreground color="-13478725"/>
               <text value="ADD"/>
             </properties>
           </component>
@@ -127,6 +129,7 @@
               <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <foreground color="-15287503"/>
               <text value="SAVE"/>
             </properties>
           </component>
@@ -135,6 +138,7 @@
               <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <foreground color="-4514537"/>
               <text value="CANCEL"/>
             </properties>
           </component>

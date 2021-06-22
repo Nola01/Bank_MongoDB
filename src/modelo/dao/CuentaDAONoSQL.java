@@ -10,6 +10,7 @@ import modelo.dto.Cuenta;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -69,6 +70,18 @@ public class CuentaDAONoSQL implements CuentaDAO{
         //documento o cuenta con ese id.
         mongoCollection.deleteOne(document.append("_id", new ObjectId(idCuenta)));
 
+        //mostramos un mensaje para verificar que se ha eliminado la cuenta si el numero
+        //de documentos eliminados es == 0. Sino, mostramos un mensaje de error
+        if (mongoCollection.deleteOne(document).getDeletedCount() == 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Cuenta borrada con exito", "Borrar",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "La cuenta no se pudo borrar correctamente", "Borrar",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
         //devuelve TRUE si se elimina algún documento (count de documentos eliminados distinto de 0)
         //devuelve FALSE si no se elimina ningún documento (count de documentos eliminados = 0)
         return mongoCollection.deleteOne(document).getDeletedCount() != 0;
@@ -94,6 +107,19 @@ public class CuentaDAONoSQL implements CuentaDAO{
         //correctamente
         long numFinal = mongoCollection.countDocuments();
 
+        //mostramos un mensaje para verificar que se ha añadido la cuenta si la resta de
+        //la longitud inicial y final de la coleccion es distinta de 0. Sino, mostramos un mensaje de error
+        if ((numFinal - numInicial) != 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Cuenta añadida con exito", "Añadir",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "La cuenta no se pudo añadir correctamente", "Añadir",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+
         //devuelve TRUE si la resta de las dos variables long creadas es distinto de 0, es decir, ha aumentado el numero
         //de documentos de la colección. Devuelve FALSE si la resta es igual a 0, es decir, no hay cambios
         return (numFinal - numInicial) != 0;
@@ -107,5 +133,10 @@ public class CuentaDAONoSQL implements CuentaDAO{
                 Updates.set("creditCard",cuentaConID.getCreditCard()),
                 Updates.set("balance",cuentaConID.getBalance()),
                 Updates.set("fullName",cuentaConID.getFullName())));
+
+        //mostramos un mensaje para verificar que se ha actualizado la cuenta
+        JOptionPane.showMessageDialog(null,
+                "Cuenta actualizada con exito", "Actualizar",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 }
