@@ -1,3 +1,3 @@
-# subirNota2020_21
+# Bank_MongoDB
 
-Proyecto para subir nota en el modulo de programación de 1º de DAM
+Backend to manage bank accounts using Mongo DB
